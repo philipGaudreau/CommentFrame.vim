@@ -25,7 +25,6 @@
 "        see: http://vimdoc.sourceforge.net/htmldoc/uganda.html#license        "
 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~}}}"
 
-
 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 "                          CommentFrame function                            {{{"
 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -60,6 +59,51 @@ function! s:CommentFrame(start_str, end_str, line_width, frame_fill, title_fill,
 	call append(line('.'), l:border)
 	call append(line('.'), l:title_line)
 	call append(line('.'), l:border)
+endfunction
+"}}}
+
+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+"                          CommentBox function                              {{{"
+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+" Syntax: CommentBox(
+"    comment_char:     first character of each line.
+"    top_start_str:    top char to start line,
+"    top_end_str:      top char to end the line,
+"    line_width        width of line,
+"    top_frame_fill:   top character to fill space in frame border (e.g. '*', '-', '=', ' '),
+"    start_title_str:  start character start title line (e.g. '|'),
+"    end_title_str:    end character end title line (e.g. '|'),
+"    spacing:          number of spaces to leave around title string
+"    bottom_start_str: bottom 
+"    bottom_end_str:   
+"    bottom_frame_fill:
+"    titlestring:       title string in center of line)
+function! s:CommentBox(comment_char, top_start_str, top_end_str, line_width, top_frame_fill, start_title_str, end_title_str, title_fill, spacing, bottom_start_str, bottom_end_str, bottom_frame_fill, titlestring)
+  " check and mod arg vars
+  let l:title_fill = s:CheckNotEmpty(' ', a:title_fill)
+  let l:top_frame_fill = s:CheckNotEmpty(' ', a:top_frame_fill)
+  let l:bottom_frame_fill = s:CheckNotEmpty(' ', a:bottom_frame_fill)
+
+  " prepend/append spacing
+  let l:titlestr = repeat(' ', a:spacing) . a:titlestring . repeat(' ', a:spacing)
+
+  " combine and count
+	let l:middle_length=a:line_width - len(a:top_start_str . a:top_end_str)
+	let l:title_left_length=((l:middle_length / 2) - (len(l:titlestr) / 2))
+  let l:title_left = repeat(l:title_fill, l:title_left_length)
+	let l:title_right_length=l:middle_length - len(l:title_left) - len(l:titlestr)
+  let l:title_right = repeat(l:title_fill, l:title_right_length)
+  
+  " build border lines
+	let l:top_border=a:comment_char . a:top_start_str . repeat(l:top_frame_fill, l:middle_length) . a:top_end_str
+	let l:bottom_border=a:comment_char . a:bottom_start_str . repeat(l:bottom_frame_fill, l:middle_length) . a:bottom_end_str
+  " build title_line
+	let l:title_line=a:comment_char . a:start_title_str . l:title_left . l:titlestr . l:title_right . a:end_title_str
+
+  " add comment lines to doc
+	call append(line('.'), l:bottom_border)
+	call append(line('.'), l:title_line)
+	call append(line('.'), l:top_border)
 endfunction
 "}}}
 
@@ -136,6 +180,14 @@ function! CommentFrame#Custom(start_str, end_str, line_width,
                      \a:frame_fill, a:title_fill, a:numspaces, a:titlestring)
 endfunction
 
+function! CommentFrame#CustomBox(comment_char, top_start_str, top_end_str, line_width, 
+            \top_frame_fill, start_title_str, end_title_str, title_fill, spacing, 
+            \bottom_start_str, bottom_end_str, bottom_frame_fill, titlestring)
+  call s:CommentBox(a:comment_char, a:top_start_str, a:top_end_str, a:line_width, 
+            \a:top_frame_fill, a:start_title_str, a:end_title_str, a:title_fill, a:spacing, 
+            \a:bottom_start_str, a:bottom_end_str, a:bottom_frame_fill, a:titlestring)
+endfunction
+
 function! CommentFrame#CustomRight(start_str, end_str, line_width,
                      \right_width, title_fill, numspaces, titlestring)
   call s:CommentRight(a:start_str, a:end_str, a:line_width, a:right_width, 
@@ -174,7 +226,6 @@ call s:MapKeys('ni', 'fcq', ':CommentFrameQuoteDash ""<Left>')
 
 command! -nargs=+ CommentFrameQuoteTilde  : call CommentFrame#Custom('"', '"', 80, '~', ' ', 5, <args>)
 call s:MapKeys('ni', 'fcQ', ':CommentFrameQuoteTilde ""<Left>')
-
 "}}}
 
 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Languages, CommentRight {{{ ~~~~~
@@ -189,7 +240,11 @@ call s:MapKeys('ni', 'frS', ':CommentRightSlashStar ""<Left>')
 
 command! -nargs=+ CommentRightQuote     : call CommentFrame#CustomRight('"', '', 80, 5, '~', 1, <args>)
 call s:MapKeys('ni', 'frq', ':CommentRightQuote ""<Left>')
+"}}}
 
+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Languages, CommentBox {{{ ~~~~~
+command! -nargs=+ CommentBoxBox         : call CommentFrame#CustomBox('//', '┍', '┑', 80, '━', '│', '│', ' ', 1, '└', '┘', '─', <args>)
+call s:MapKeys('ni', 'fcb', ':CommentFrame#CustomBox""<Left>')
 "}}}
 
 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Plugin Menu Creation {{{ ~~~~~
