@@ -244,7 +244,7 @@ call s:MapKeys('ni', 'frq', ':CommentRightQuote ""<Left>')
 
 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Languages, CommentBox {{{ ~~~~~
 command! -nargs=+ CommentBoxBox         : call CommentFrame#CustomBox('//', '┍', '┑', 80, '━', '│', '│', ' ', 1, '└', '┘', '─', <args>)
-call s:MapKeys('ni', 'fcb', ':CommentFrame#CustomBox""<Left>')
+call s:MapKeys('ni', 'fcb', ':CommentBoxBox ""<Left>')
 "}}}
 
 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Plugin Menu Creation {{{ ~~~~~
