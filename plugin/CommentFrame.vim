@@ -102,9 +102,6 @@ function! s:CommentGrid(...)
     let l:CELL_VERT_SPLIT_TL  = '┨'
     let l:CELL_VERT_SPLIT_TR  = '┠'
 
-    let l:halfCellWidth  = float2nr(ceil(l:cellWidth / 2.0))
-    let l:halfCellHeight = float2nr(ceil(l:cellHeight / 2.0))
-
     let l:topBorder = s:DrawLine(l:width, l:cellWidth, l:BORDER_TOP_LEFT, l:BORDER_SPACE, l:BORDER_SPLIT_DOWN, l:BORDER_TOP_RIGHT)
     let l:bottomBorder = s:DrawLine(l:width, l:cellWidth, l:BORDER_BOTTOM_LEFT, l:BORDER_SPACE, l:BORDER_SPLIT_UP, l:BORDER_BOTTOM_RIGHT)
     let l:rowBorder = s:DrawLine(l:width, l:cellWidth, l:CELL_VERT_SPLIT_TR, l:CELL_HORZ_SPLIT, l:CELL_SPLIT, l:CELL_VERT_SPLIT_TL)
@@ -325,7 +322,8 @@ command! -nargs=+ CommentBoxBox         : call CommentFrame#CustomBox('//', '┍
 call s:MapKeys('ni', 'fcb', ':CommentBoxBox ""<Left>')
 
 command! -nargs=+ CommentGrid           : call CommentFrame#CustomGrid(<args>)
-call s:MapKeys('ni', 'fcg', ':CommentGrid ""<Left>')
+call s:MapKeys('ni', 'fg2', ':CommentGrid 2,2<CR>')
+call s:MapKeys('ni', 'fgx', ':CommentGrid ')
 "}}}
 
 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Plugin Menu Creation {{{ ~~~~~
@@ -342,5 +340,7 @@ amenu .170.1 &Plugin.Comment&Frames.Right\ &Hash<Tab>frh            <Leader>frh
 amenu .170.1 &Plugin.Comment&Frames.Right\ &Slashes<Tab>frs         <Leader>frs
 amenu .170.1 &Plugin.Comment&Frames.Right\ &Slash\ Stars<Tab>frS    <Leader>frS
 amenu .170.1 &Plugin.Comment&Frames.Right\ &Quote<Tab>frq           <Leader>frq
+amenu .170.1 &Plugin.Comment&Frames.-Grid- :
+amenu .170.1 &Plugin.Comment&Frames.Grid\ &2x2<Tab>fg2              <Leader>fg2
 "}}}
 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~}}}
