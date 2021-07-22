@@ -81,7 +81,12 @@ function s:Check(currStr, count, acc, h)
 	if a:h == "\n"
 		return ["",0,a:acc + [a:currStr]]
 	elseif a:count == 75
-		return ["", 0, a:acc + [a:currStr . a:h]]
+        if a:h == " "
+            return ["", 0, a:acc + [a:currStr]]
+        else
+            let l:pieces = split(a:currStr . a:h)
+            return [l:pieces[-1], len(l:pieces[-1]), a:acc + [join(l:pieces[:-2])]]
+        endif
 	else
 		return [a:currStr . a:h, (a:count+1), a:acc]
 	endif
