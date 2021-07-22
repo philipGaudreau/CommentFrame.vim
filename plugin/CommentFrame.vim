@@ -361,20 +361,21 @@ call s:MapKeys('ni', 'fgx', ':CommentGrid ')
 "}}}
 
 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Plugin Menu Creation {{{ ~~~~~
-amenu .170.1 &Plugin.Comment&Frames.Frame\ &Custom<Tab>fcu          <Leader>fcu
+" amenu .170.1 &Plugin.Comment&Frames.Frame\ &Custom<Tab>fcu          <Leader>fcu
 amenu .170.1 &Plugin.Comment&Frames.Frame\ &HashDash<Tab>fch        <Leader>fch
-amenu .170.1 &Plugin.Comment&Frames.Frame\ Hash&Equal<Tab>fcH       <Leader>fcH
-amenu .170.1 &Plugin.Comment&Frames.Frame\ &Slashes<Tab>fcs         <Leader>fcs
-amenu .170.1 &Plugin.Comment&Frames.Frame\ &Slash\ Star<Tab>fcs     <Leader>fcS
-amenu .170.1 &Plugin.Comment&Frames.Frame\ &QuoteDash<Tab>fcq       <Leader>fcq
-amenu .170.1 &Plugin.Comment&Frames.Frame\ Quote&Tilde<Tab>fcQ      <Leader>fcQ
-amenu .170.1 &Plugin.Comment&Frames.-Rights- :
-amenu .170.1 &Plugin.Comment&Frames.Right\ &Custom<Tab>frc          <Leader>frc
-amenu .170.1 &Plugin.Comment&Frames.Right\ &Hash<Tab>frh            <Leader>frh
-amenu .170.1 &Plugin.Comment&Frames.Right\ &Slashes<Tab>frs         <Leader>frs
-amenu .170.1 &Plugin.Comment&Frames.Right\ &Slash\ Stars<Tab>frS    <Leader>frS
-amenu .170.1 &Plugin.Comment&Frames.Right\ &Quote<Tab>frq           <Leader>frq
-amenu .170.1 &Plugin.Comment&Frames.-Grid- :
-amenu .170.1 &Plugin.Comment&Frames.Grid\ &2x2<Tab>fg2              <Leader>fg2
+
+" amenu .170.1 &Plugin.Comment&Frames.Frame\ Hash&Equal<Tab>fcH       <Leader>fcH
+" amenu .170.1 &Plugin.Comment&Frames.Frame\ &Slashes<Tab>fcs         <Leader>fcs
+" amenu .170.1 &Plugin.Comment&Frames.Frame\ &Slash\ Star<Tab>fcs     <Leader>fcS
+" amenu .170.1 &Plugin.Comment&Frames.Frame\ &QuoteDash<Tab>fcq       <Leader>fcq
+" amenu .170.1 &Plugin.Comment&Frames.Frame\ Quote&Tilde<Tab>fcQ      <Leader>fcQ
+" amenu .170.1 &Plugin.Comment&Frames.-Rights- :
+" amenu .170.1 &Plugin.Comment&Frames.Right\ &Custom<Tab>frc          <Leader>frc
+" amenu .170.1 &Plugin.Comment&Frames.Right\ &Hash<Tab>frh            <Leader>frh
+" amenu .170.1 &Plugin.Comment&Frames.Right\ &Slashes<Tab>frs         <Leader>frs
+" amenu .170.1 &Plugin.Comment&Frames.Right\ &Slash\ Stars<Tab>frS    <Leader>frS
+" amenu .170.1 &Plugin.Comment&Frames.Right\ &Quote<Tab>frq           <Leader>frq
+" amenu .170.1 &Plugin.Comment&Frames.-Grid- :
+" amenu .170.1 &Plugin.Comment&Frames.Grid\ &2x2<Tab>fg2              <Leader>fg2
 "}}}
 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~}}}
