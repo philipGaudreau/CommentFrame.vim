@@ -80,12 +80,14 @@ endfunc
 function s:Check(currStr, count, acc, h)
 	if a:h == "\n"
 		return ["",0,a:acc + [a:currStr]]
-	elseif a:count == 75
+	elseif a:count == 76
         if a:h == " "
             return ["", 0, a:acc + [a:currStr]]
+        elseif a:currStr[len(a:currStr)-1] == " "
+            return [a:h, 1, a:acc + [a:currStr[:-2]]]
         else
-            let l:pieces = split(a:currStr . a:h)
-            return [l:pieces[-1], len(l:pieces[-1]), a:acc + [join(l:pieces[:-2])]]
+            let l:pieces = split(a:currStr)
+            return [l:pieces[-1] . a:h, len(l:pieces[-1])+1, a:acc + [join(l:pieces[:-2])]]
         endif
 	else
 		return [a:currStr . a:h, (a:count+1), a:acc]
