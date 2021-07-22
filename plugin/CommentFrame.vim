@@ -41,25 +41,52 @@ function! s:CommentFrame(start_str, end_str, line_width, frame_fill, title_fill,
     let l:frame_fill = s:CheckNotEmpty(' ', a:frame_fill)
 
     " prepend/append spacing
-    let l:titlestr = repeat(' ', a:spacing) . a:titlestring . repeat(' ', a:spacing)
+    let l:textstrs = s:split_width(a:titlestring)
+    let l:decorated = []
+    for piece in textstrs
+        let l:tempstr = repeat(' ', a:spacing) . piece . repeat(' ', a:spacing)
 
-  " combine and count
-    let l:middle_length=a:line_width - len(a:start_str . a:end_str)
-    let l:title_left_length=((l:middle_length / 2) - (len(l:titlestr) / 2))
-    let l:title_left = repeat(l:title_fill, l:title_left_length)
-	let l:title_right_length=l:middle_length - len(l:title_left) - len(l:titlestr)
-    let l:title_right = repeat(l:title_fill, l:title_right_length)
-  
+    " combine and count
+        let l:middle_length=a:line_width - len(a:start_str . a:end_str)
+        let l:title_left_length=((l:middle_length / 2) - (len(l:tempstr) / 2))
+        let l:title_left = repeat(l:title_fill, l:title_left_length)
+        let l:title_right_length=l:middle_length - len(l:title_left) - len(l:tempstr)
+        let l:title_right = repeat(l:title_fill, l:title_right_length)
+
+    " build title_line
+        call add(l:decorated, a:start_str . l:title_left . l:tempstr . l:title_right . a:end_str)
+    endfor
+    call reverse(l:decorated)
+
   " build border lines
-	let l:border=a:start_str . repeat(l:frame_fill, l:middle_length) . a:end_str
-  " build title_line
-	let l:title_line=a:start_str . l:title_left . l:titlestr . l:title_right . a:end_str
+    let l:border=a:start_str . repeat(l:frame_fill, l:middle_length) . a:end_str
 
   " add comment lines to doc
-	call append(line('.'), l:border)
-	call append(line('.'), l:title_line)
-	call append(line('.'), l:border)
+    call append(line('.'), l:border)
+    for chunk in l:decorated
+        call append(line('.'), chunk)
+    endfor
+    call append(line('.'), l:border)
 endfunction
+
+function s:split_width(text)
+    let l:result = ["", 0, []]
+  for item in split(a:text, '\zs')
+    let l:result = s:Check(l:result[0], l:result[1], l:result[2], item)
+  endfor
+  return l:result[2] + [l:result[0]]
+endfunc
+
+function s:Check(currStr, count, acc, h)
+	if a:h == "\n"
+		return ["",0,a:acc + [a:currStr]]
+	elseif a:count == 75
+		return ["", 0, a:acc + [a:currStr . a:h]]
+	else
+		return [a:currStr . a:h, (a:count+1), a:acc]
+	endif
+endfunc
+
 "}}}
 
 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
