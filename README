@@ -66,3 +66,4 @@ command, if only a keymapping is desired, not another usable command.
 
 Have fun stormin the castle!
 
+Added a wrap if the message is more than 80 chars. Also, it can be cut with '\n' char.
